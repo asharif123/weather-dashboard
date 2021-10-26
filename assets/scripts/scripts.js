@@ -3,11 +3,6 @@ var cityForm = document.querySelector("#city-weather-form");
 var previousCityResults = document.querySelector(".city-weather-previous-search");
 var citySearchResults = document.querySelector(".city-weather-result");
 var fiveDayForecast = document.querySelector(".city-weather-5-day-forecast");
-// user types in a city in the search box and when user hits submit, store the city in local storage
-// when user types in the city, user should see the following:
-    // the city name with today's weather, temp, wind, humidity, uv index
-    // 5 day forecast having dates, pic, weather, temp and humidity
-// take the city user entered and turn it into clickable button so user can click to see weather/5 day forecast
 
 // 1 - create function where if user enters city name it gets stored in local storage and is clickable button
 // 2 - city that was search gets added dynamically to previouscityResults div from local storage
@@ -15,12 +10,6 @@ var fiveDayForecast = document.querySelector(".city-weather-5-day-forecast");
 //     added dynamically to city weather result div
 // 4-  also, auto generate the 5 day forecast that gets added to city-weather-5-day-forecast div
 
-
-function displayTime() {
-    citySearchResults.text(moment().format('MMM DD, YYYY [at] hh:mm:ss a'));
-}
-
-setInterval(displayTime, 1000)
 
 // function handles submissions when user enters city and hits submit
 
@@ -47,6 +36,9 @@ function getCityData(city) {
                 response.json().then(function(data) {
                     console.log(data)
                     displayCurrentWeather(data);
+                    
+                    // function to get UVI Index of inputted city
+                    displayCurrentUVIIndex(data);
                 })
             }
 
@@ -68,14 +60,17 @@ function displayCurrentWeather(weatherData) {
     var currentCityName = document.createElement('h1');
     
     // function to add current date associated with weather
-    var currentDate = document.createElement('h1');
+    var currentDate = document.createElement('span');
     currentDate.id = 'current-city-date';
 
-    function displayTime() {
-        document.querySelector("#current-city-date").text(moment().format('MMM DD, YYYY'));
-    }
-
-    setInterval(displayTime, 1000)
+    n =  new Date();
+    // console.log(n.getFullYear());
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    // console.log(m);
+    d = n.getDate();
+    // console.log(d);
+    // document.querySelector("#current-city-date").innerHTML = "(" + n + ")";
 
     currentCityInfo.appendChild(currentCityName);
     currentCityInfo.appendChild(currentDate);
@@ -83,8 +78,6 @@ function displayCurrentWeather(weatherData) {
     var currentCityTemp = document.createElement("span");
     var currentCityWindSpeed = document.createElement("span");
     var currentCityHumidity = document.createElement("span");
-    var currentCityUV = document.createElement("span");
-
     currentCityName.append(weatherData.name);
     currentCityTemp.append("Temp: " + weatherData["main"]["temp"] + " F");
     currentCityTemp.innerHTML = `<img src="https://openweathermap.org/img/wn/${weatherData["weather"][0].icon}.png" alt="Weather Icon"/>`;
@@ -96,6 +89,31 @@ function displayCurrentWeather(weatherData) {
     citySearchResults.appendChild(currentCityTemp);
     citySearchResults.appendChild(currentCityWindSpeed);
     citySearchResults.appendChild(currentCityHumidity);
+}
+
+// function to display UVI index
+function displayCurrentUVIIndex(weatherData) {
+    console.log("Lattitude", weatherData["coord"].lat);
+    console.log("Longitude", weatherData["coord"].lon);
+    var apiKey = '8aaaf47fd1335c41e91dc5418eca16e9';
+    var openWeatherUVIURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + weatherData["coord"].lat + "&lon=" + weatherData["coord"].lon + "&exclude=hourly,daily&appid=" + apiKey;
+    var currentCityUVIIndex = document.createElement("span");
+    fetch(openWeatherUVIURL)
+    .then(function(response){
+        if(response.ok) {
+            response.json().then(function(data) {
+                currentCityUVIIndex.append("UVI Index: " + data["current"].uvi);
+                citySearchResults.appendChild(currentCityUVIIndex);
+            })
+        }
+    })
+
+
+    .catch(function (error) {
+        alert('UVI index does not exist!');
+    });
+
+    
 }
 
 cityForm.addEventListener("submit", submitCityData);

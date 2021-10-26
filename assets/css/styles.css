@@ -33,10 +33,11 @@ main {
 
 #city-weather-search-results {
     height: 100%;
+
 }
 
 .city-weather-result {
-    max-height: 200px;
+    max-height: 250px;
     padding: 5px;
     border: 2px solid black;
     margin: 1% 5% 0% 0%;
