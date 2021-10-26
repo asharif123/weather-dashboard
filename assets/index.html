@@ -5,8 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather DashBoard</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main>
+        <div id="city-weather-search">
+            <h2>Search for a City:</h2>
+            <form>
+                <input type="text" id="city-weather-search-value" placeholder="San Diego">
+                <button type="submit" id="city-weather-search-button">Search</button>            
+            </form>
+            <div class="city-weather-previous-search">
+
+            </div>
+        </div>
+        
+        <div id="city-weather-search-results">
+            <div class="city-weather-result">
+
+            </div>
+            <div class="city-weather-5-day-forecast">
+
+            </div>
+        </div>
+    </main>
+    <script src="../assets/scripts/scripts.js"></script>
 </body>
 </html>

@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --font-primary: 'Roboto', sans-serif;
+}
+
+header {
+    font-family: var(--font-primary);
+    color: rgb(219, 212, 212);
+    background: linear-gradient(to left, #0805cc, #091168);
+    padding: 22px 10px;
+    text-align: center;
+}
+
+main {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+#city-weather-search {
+    width: 30vw;
+}
+
+#city-weather-search h2 {
+    font-family: var(--font-primary);
+    padding: 2% 5% 2% 1%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    padding-left: 1%;
+}
+
+form input {
+    padding: 5%;
+    min-width: 250px;
+    border-radius: 5px;
+}
+
+form button {
+    margin: 5% 0% 5% 0%;
+    padding: 5%;
+    min-width: 250px;
+    border-radius: 5px;
+    background-color: #0c51a0;
+    color: white;
+    font-weight: 900;
+}
+
+#city-weather-search-results {
+    width: 70vw;
+}
+
+
+
+
