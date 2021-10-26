@@ -55,6 +55,7 @@ function getCityData(city) {
 
 // function display weather information of city inputted by user
 function displayCurrentWeather(weatherData) {
+    citySearchResults.textContent = '';
     var currentCityInfo = document.createElement('div');
     currentCityInfo.className = "current-city-information";
     var currentCityName = document.createElement('h1');
@@ -79,8 +80,8 @@ function displayCurrentWeather(weatherData) {
     var currentCityWindSpeed = document.createElement("span");
     var currentCityHumidity = document.createElement("span");
     currentCityName.append(weatherData.name);
-    currentCityTemp.append("Temp: " + weatherData["main"]["temp"] + " F");
-    currentCityTemp.innerHTML = `<img src="https://openweathermap.org/img/wn/${weatherData["weather"][0].icon}.png" alt="Weather Icon"/>`;
+    // currentCityTemp.append("Temp: " + weatherData["main"]["temp"] + " F");
+    currentCityTemp.innerHTML = "Temp: " + weatherData["main"]["temp"] + " F" +`<img src="https://openweathermap.org/img/wn/${weatherData["weather"][0].icon}.png" alt="Weather Icon"/>`;
     currentCityWindSpeed.append("Wind: " + weatherData["wind"]["speed"] + " MPH")
     currentCityHumidity.append("Humidity: " + weatherData["main"]["humidity"] + " %")
 
@@ -102,7 +103,18 @@ function displayCurrentUVIIndex(weatherData) {
     .then(function(response){
         if(response.ok) {
             response.json().then(function(data) {
-                currentCityUVIIndex.append("UVI Index: " + data["current"].uvi);
+                if (data["current"].uvi < 3) {
+                    currentCityUVIIndex.className = "current-city-success-uvi";
+                }
+                else if (data["current"].uvi < 7) {
+                    currentCityUVIIndex.className = "current-city-warning-uvi";
+                }
+
+                else {
+                    currentCityUVIIndex.className = "current-city-danger-uvi";
+                }
+                currentCityUVIIndex.textContent = "UV Index: "
+                currentCityUVIIndex.append(data["current"].uvi);
                 citySearchResults.appendChild(currentCityUVIIndex);
             })
         }

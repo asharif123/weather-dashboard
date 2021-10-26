@@ -32,16 +32,56 @@ main {
 }
 
 #city-weather-search-results {
+    font-family: var(--font-primary);
     height: 100%;
 
 }
 
 .city-weather-result {
-    max-height: 250px;
+    min-height: 250px;
     padding: 5px;
     border: 2px solid black;
     margin: 1% 5% 0% 0%;
+    border-radius: 21px;
 }
+
+.city-weather-result span {
+    display: flex;
+}
+
+.current-city-success-uvi {
+    background-color: #0b9622;
+    color: white;
+    margin-top: 2%;
+    width: 150px;
+    max-width: 200px;
+    padding: 1%;
+    border-radius: 5px;
+
+}
+
+.current-city-warning-uvi {
+    background-color: #6c860c;
+    color: white;
+    margin-top: 2%;
+    width: 150px;
+    max-width: 200px;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+
+.current-city-danger-uvi {
+    background-color: #eb1313;
+    color: white;
+    margin-top: 2%;
+    width: 150px;
+    max-width: 200px;
+    padding: 1%;
+    border-radius: 5px;
+}
+
+
 
 .current-city-information {
     display: flex;
