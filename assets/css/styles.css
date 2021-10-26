@@ -19,7 +19,7 @@ header {
 main {
     width: 100vw;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 #city-weather-search {
@@ -29,6 +29,27 @@ main {
 #city-weather-search h2 {
     font-family: var(--font-primary);
     padding: 2% 5% 2% 1%;
+}
+
+#city-weather-search-results {
+    height: 100%;
+}
+
+.city-weather-result {
+    max-height: 200px;
+    padding: 5px;
+    border: 2px solid black;
+    margin: 1% 5% 0% 0%;
+}
+
+.current-city-information {
+    display: flex;
+}
+
+span {
+    display: block;
+    font-size: 120%;
+    margin-top: 2%;
 }
 
 form {
