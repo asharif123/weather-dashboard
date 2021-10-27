@@ -124,7 +124,24 @@ form button {
     width: 70vw;
 }
 
+.city-weather-previous-search {
+    display: flex;
+    flex-direction: column;
+    margin: 0% 10%;
+}
+
+.city-weather-previous-search-button {
+    width: 200px;
+    border-radius: 5px;
+    background-color: #5e6670;
+    color: white;
+    font-weight: 900;
+    padding: 5%;
+    margin-bottom: 2%;
+}
+
 .city-weather-5-day-forecast {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
 }

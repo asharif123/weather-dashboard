@@ -4,12 +4,6 @@ var previousCityResults = document.querySelector(".city-weather-previous-search"
 var citySearchResults = document.querySelector(".city-weather-result");
 var fiveDayForecast = document.querySelector(".city-weather-5-day-forecast");
 
-// 1 - create function where if user enters city name it gets stored in local storage and is clickable button
-// 2 - city that was search gets added dynamically to previouscityResults div from local storage
-// 3 - once user enters city name, use OpenWeather One Call API w/ city nameto retrieve today's weather that is 
-//     added dynamically to city weather result div
-// 4-  also, auto generate the 5 day forecast that gets added to city-weather-5-day-forecast div
-
 // API KEY
 var apiKey = '8aaaf47fd1335c41e91dc5418eca16e9';
 
@@ -20,12 +14,37 @@ function submitCityData(event) {
     if (cityName) {
         var cityValue = cityName.value.trim().replace(" ", '');
         getCityData(cityName);
+        storeCityData(cityValue)
         cityName.value = '';
     }
     else {
         window.alert("City does not exist!");
     }
 }
+
+
+// use local storage to store every city inputted by user
+function storeCityData(city) {
+    var cityStorage = {
+        cityInformation: city   
+    }
+
+    allCityData.push(cityStorage);
+    localStorage.setItem("cityStorage", JSON.stringify(allCityData));
+}
+
+// load stored cities that user inputted
+var allCityData = JSON.parse(localStorage.getItem("cityStorage")) || [];
+function loadPreviousCityData() {
+    for (var i = 0; i < allCityData.length; i++) {
+        var previousCitySearch = document.createElement('button');
+        previousCitySearch.className = "city-weather-previous-search-button";
+        previousCitySearch.append(allCityData[i].cityInformation);
+        previousCityResults.appendChild(previousCitySearch);
+    }
+}
+
+loadPreviousCityData();
 
 // function retrives actual weather data based off city user inputted
 function getCityData(city) {
@@ -36,6 +55,7 @@ function getCityData(city) {
             if(response.ok) {
                 response.json().then(function(data) {
                     console.log(data)
+
                     // display the current weather from retrived data
                     displayCurrentWeather(data);
                     
@@ -97,8 +117,6 @@ function displayCurrentWeather(weatherData) {
 
 // function to display UVI index
 function displayCurrentUVIIndex(weatherData) {
-    console.log("Lattitude", weatherData["coord"].lat);
-    console.log("Longitude", weatherData["coord"].lon);
     var openWeatherUVIURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + weatherData["coord"].lat + "&lon=" + weatherData["coord"].lon + "&exclude=hourly,daily&appid=" + apiKey;
     var currentCityUVIIndex = document.createElement("span");
     currentCityUVIIndex.textContent = '';
@@ -133,10 +151,7 @@ function displayCurrentUVIIndex(weatherData) {
 
 // function to display 5-day forecast
 function displayFiveDayForecast(weatherData) {
-    // var fiveDayForecastTitle = document.createElement('h2');
     fiveDayForecast.textContent = '';
-    // fiveDayForecastTitle.textContent = "5-Day Forecast";
-    // fiveDayForecast.appendChild(fiveDayForecastTitle);
     var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherData["name"] + "&appid=" + apiKey + '&units=imperial';
     console.log(fiveDayForecastURL);
     // foreCastCard.textContent = '';
@@ -147,8 +162,8 @@ function displayFiveDayForecast(weatherData) {
             response.json().then(function(data) {
                 console.log("DATA", data);
                 // Pieces of information to add to div
-                console.log("ICON", `<img src="https://openweathermap.org/img/w/${data["list"][0]["weather"][0]["icon"]}.png" alt="Weather Icon"/>`);
-                console.log("ICON", data["list"][0]["weather"].icon);
+                // console.log("ICON", `<img src="https://openweathermap.org/img/w/${data["list"][0]["weather"][0]["icon"]}.png" alt="Weather Icon"/>`);
+                // console.log("ICON", data["list"][0]["weather"].icon);
 
                 for (var i = 7; i < 40; i = i + 8) {
                     var foreCastCard = document.createElement("div");
