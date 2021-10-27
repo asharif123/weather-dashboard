@@ -133,32 +133,50 @@ function displayCurrentUVIIndex(weatherData) {
 
 // function to display 5-day forecast
 function displayFiveDayForecast(weatherData) {
+    // var fiveDayForecastTitle = document.createElement('h2');
     fiveDayForecast.textContent = '';
-    var fiveDayForecastTitle = document.createElement('h2');
-    fiveDayForecastTitle.textContent = "5-Day Forecast";
-    fiveDayForecast.appendChild(fiveDayForecastTitle);
+    // fiveDayForecastTitle.textContent = "5-Day Forecast";
+    // fiveDayForecast.appendChild(fiveDayForecastTitle);
     var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherData["name"] + "&appid=" + apiKey + '&units=imperial';
     console.log(fiveDayForecastURL);
+    // foreCastCard.textContent = '';
+
     fetch(fiveDayForecastURL)
     .then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
                 console.log("DATA", data);
                 // Pieces of information to add to div
-                console.log("DATE", data["list"][0]["dt_txt"].split(' ')[0]);
-                console.log("ICON", `<img src="https://openweathermap.org/img/wn/${data["list"][0]["weather"].icon}.png" alt="Weather Icon"/>`);
-                console.log("TEMP", data["list"][0]["main"].temp);
-                console.log("Wind Speed", data["list"][0]["wind"].speed);
-                console.log("Humidity", data["list"][0]["main"].humidity)
-                
-                for (var i = 0; i < 33; i = i + 8) {
-                    console.log(data["list"][i])
+                console.log("ICON", `<img src="https://openweathermap.org/img/w/${data["list"][0]["weather"][0]["icon"]}.png" alt="Weather Icon"/>`);
+                console.log("ICON", data["list"][0]["weather"].icon);
+
+                for (var i = 7; i < 40; i = i + 8) {
                     var foreCastCard = document.createElement("div");
-                    foreCastCard.className = "city-weather-forecast-card";
-                    console.log(data[i]);
-                    // document.querySelector(".city-weather-forecast-card").appendChild(data[i]["dt-txt"])
+                    foreCastCard.className = "city-weather-forecast-card";                
+                    console.log(data["list"][i])
+                    var foreCastCardDate = document.createElement("h2");
+                    var foreCastCardIcon = document.createElement("div");
+                    foreCastCardIcon.className = "city-weather-forecast-card-icon";
+                    var foreCastCardTemp = document.createElement("span");
+                    var foreCastCardWind = document.createElement("span");
+                    var foreCastCardHumidity = document.createElement("span");
+
+                    foreCastCardDate.append(data["list"][i]["dt_txt"].split(' ')[0])
+                    foreCastCardIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${data["list"][i]["weather"].icon}.png" alt="Weather Icon"/>`;
+                    foreCastCardTemp.append("Temp: " + data["list"][i]["main"].temp + " F");
+                    foreCastCardWind.append("Wind: " + data["list"][i]["wind"].speed + " mph");
+                    foreCastCardHumidity.append("Humidity: " + data["list"][i]["main"].humidity + " %");
+
+                    foreCastCard.appendChild(foreCastCardDate);
+                    foreCastCard.appendChild(foreCastCardIcon);
+                    foreCastCard.appendChild(foreCastCardTemp);
+                    foreCastCard.appendChild(foreCastCardWind);
+                    foreCastCard.appendChild(foreCastCardHumidity);
+                    fiveDayForecast.appendChild(foreCastCard);
+
 
                 };
+
             })
         }
     })

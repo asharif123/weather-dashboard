@@ -124,6 +124,28 @@ form button {
     width: 70vw;
 }
 
+.city-weather-5-day-forecast {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.city-weather-forecast-card {
+    width: 18%;
+    margin: 2% 2% 0% 0%;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 1%;
+    min-height: 250px;
+    background-color: #31308a;
+    color: white;
+
+}
+
+.city-weather-forecast-card h2, .city-weather-forecast-card-icon, .city-weather-forecast-card span {
+    margin-bottom: 24%;
+}
+
+
 
 
 
