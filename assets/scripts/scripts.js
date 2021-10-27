@@ -137,14 +137,28 @@ function displayFiveDayForecast(weatherData) {
     var fiveDayForecastTitle = document.createElement('h2');
     fiveDayForecastTitle.textContent = "5-Day Forecast";
     fiveDayForecast.appendChild(fiveDayForecastTitle);
-    // var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + weatherData["coord"].lat + "&lon=" + weatherData["coord"].lon + "&dt=" + weatherData["dt"] + "&appid=" + apiKey + '&units=imperial';
     var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherData["name"] + "&appid=" + apiKey + '&units=imperial';
     console.log(fiveDayForecastURL);
     fetch(fiveDayForecastURL)
     .then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
-                console.log(data);
+                console.log("DATA", data);
+                // Pieces of information to add to div
+                console.log("DATE", data["list"][0]["dt_txt"].split(' ')[0]);
+                console.log("ICON", `<img src="https://openweathermap.org/img/wn/${data["list"][0]["weather"].icon}.png" alt="Weather Icon"/>`);
+                console.log("TEMP", data["list"][0]["main"].temp);
+                console.log("Wind Speed", data["list"][0]["wind"].speed);
+                console.log("Humidity", data["list"][0]["main"].humidity)
+                
+                for (var i = 0; i < 33; i = i + 8) {
+                    console.log(data["list"][i])
+                    var foreCastCard = document.createElement("div");
+                    foreCastCard.className = "city-weather-forecast-card";
+                    console.log(data[i]);
+                    // document.querySelector(".city-weather-forecast-card").appendChild(data[i]["dt-txt"])
+
+                };
             })
         }
     })
