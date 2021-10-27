@@ -10,6 +10,8 @@ var fiveDayForecast = document.querySelector(".city-weather-5-day-forecast");
 //     added dynamically to city weather result div
 // 4-  also, auto generate the 5 day forecast that gets added to city-weather-5-day-forecast div
 
+// API KEY
+var apiKey = '8aaaf47fd1335c41e91dc5418eca16e9';
 
 // function handles submissions when user enters city and hits submit
 
@@ -27,7 +29,6 @@ function submitCityData(event) {
 
 // function retrives actual weather data based off city user inputted
 function getCityData(city) {
-    var apiKey = '8aaaf47fd1335c41e91dc5418eca16e9';
     var openWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city.value + '&appid=' + apiKey + '&units=imperial';
     console.log(openWeatherURL);
     fetch(openWeatherURL)
@@ -35,10 +36,14 @@ function getCityData(city) {
             if(response.ok) {
                 response.json().then(function(data) {
                     console.log(data)
+                    // display the current weather from retrived data
                     displayCurrentWeather(data);
                     
                     // function to get UVI Index of inputted city
                     displayCurrentUVIIndex(data);
+
+                    // function to get 5 day forecast
+                    displayFiveDayForecast(data);
                 })
             }
 
@@ -54,6 +59,7 @@ function getCityData(city) {
 }
 
 // function display weather information of city inputted by user
+
 function displayCurrentWeather(weatherData) {
     citySearchResults.textContent = '';
     var currentCityInfo = document.createElement('div');
@@ -61,17 +67,15 @@ function displayCurrentWeather(weatherData) {
     var currentCityName = document.createElement('h1');
     
     // function to add current date associated with weather
-    var currentDate = document.createElement('span');
+    var currentDate = document.createElement('h1');
     currentDate.id = 'current-city-date';
 
+    // grab the current date for corresponding weather
     n =  new Date();
-    // console.log(n.getFullYear());
     y = n.getFullYear();
     m = n.getMonth() + 1;
-    // console.log(m);
     d = n.getDate();
-    // console.log(d);
-    // document.querySelector("#current-city-date").innerHTML = "(" + n + ")";
+    currentDate.textContent = "(" + m + "/" + d + "/" + y + ")";
 
     currentCityInfo.appendChild(currentCityName);
     currentCityInfo.appendChild(currentDate);
@@ -80,7 +84,6 @@ function displayCurrentWeather(weatherData) {
     var currentCityWindSpeed = document.createElement("span");
     var currentCityHumidity = document.createElement("span");
     currentCityName.append(weatherData.name);
-    // currentCityTemp.append("Temp: " + weatherData["main"]["temp"] + " F");
     currentCityTemp.innerHTML = "Temp: " + weatherData["main"]["temp"] + " F" +`<img src="https://openweathermap.org/img/wn/${weatherData["weather"][0].icon}.png" alt="Weather Icon"/>`;
     currentCityWindSpeed.append("Wind: " + weatherData["wind"]["speed"] + " MPH")
     currentCityHumidity.append("Humidity: " + weatherData["main"]["humidity"] + " %")
@@ -96,9 +99,9 @@ function displayCurrentWeather(weatherData) {
 function displayCurrentUVIIndex(weatherData) {
     console.log("Lattitude", weatherData["coord"].lat);
     console.log("Longitude", weatherData["coord"].lon);
-    var apiKey = '8aaaf47fd1335c41e91dc5418eca16e9';
     var openWeatherUVIURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + weatherData["coord"].lat + "&lon=" + weatherData["coord"].lon + "&exclude=hourly,daily&appid=" + apiKey;
     var currentCityUVIIndex = document.createElement("span");
+    currentCityUVIIndex.textContent = '';
     fetch(openWeatherUVIURL)
     .then(function(response){
         if(response.ok) {
@@ -127,6 +130,27 @@ function displayCurrentUVIIndex(weatherData) {
 
     
 }
+
+// function to display 5-day forecast
+function displayFiveDayForecast(weatherData) {
+    fiveDayForecast.textContent = '';
+    var fiveDayForecastTitle = document.createElement('h2');
+    fiveDayForecastTitle.textContent = "5-Day Forecast";
+    fiveDayForecast.appendChild(fiveDayForecastTitle);
+    // var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + weatherData["coord"].lat + "&lon=" + weatherData["coord"].lon + "&dt=" + weatherData["dt"] + "&appid=" + apiKey + '&units=imperial';
+    var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherData["name"] + "&appid=" + apiKey + '&units=imperial';
+    console.log(fiveDayForecastURL);
+    fetch(fiveDayForecastURL)
+    .then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                console.log(data);
+            })
+        }
+    })
+}
+
+
 
 cityForm.addEventListener("submit", submitCityData);
 
