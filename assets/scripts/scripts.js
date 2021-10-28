@@ -37,7 +37,7 @@ function storeCityData(city) {
 var allCityData = JSON.parse(localStorage.getItem("cityStorage")) || [];
 
 function loadPreviousCityData() {
-    document.querySelector(".city-weather-previous-search").textContent = '';
+    previousCityResults.textContent = '';
 
     // create search button for each city in the array
     for (var i = 0; i < allCityData.length; i++) {
@@ -175,6 +175,7 @@ function displayFiveDayForecast(weatherData) {
                     console.log("ICON", data["list"][0]["weather"][0].icon);
 
                     for (var i = 3; i < data["list"].length; i = i + 8) {
+
                         // create DOM elements to hold five day forecast info
                         var foreCastCard = document.createElement("div");
                         foreCastCard.className = "city-weather-forecast-card";
