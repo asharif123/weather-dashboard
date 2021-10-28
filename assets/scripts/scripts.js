@@ -34,14 +34,18 @@ function storeCityData(city) {
 
 // load stored cities that user inputted
 var allCityData = JSON.parse(localStorage.getItem("cityStorage")) || [];
-console.log("DATA RESULTS", allCityData);
 function loadPreviousCityData() {
+    // ASK
     document.querySelector(".city-weather-previous-search").innerHTML = '';
+
+    // create search button for each city in the array
     for (var i = 0; i < allCityData.length; i++) {
         var previousCityName = document.createElement('button');
         previousCityName.className = 'city-weather-previous-search-button';
         previousCityName.setAttribute("city-name", allCityData[i]);
+        // add the city name to the button
         previousCityName.append(allCityData[i]);
+        // add the button to the previous city results div
         previousCityResults.append(previousCityName); 
         
         // user clicks on button of  previous searches and see weather info displayed
@@ -52,11 +56,6 @@ function loadPreviousCityData() {
             cityName = '';
         })
     }
-
-
-
-
-
 }
 
 
@@ -133,6 +132,7 @@ function displayCurrentWeather(weatherData) {
 // function to display UVI index
 function displayCurrentUVIIndex(weatherData) {
     var openWeatherUVIURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + weatherData["coord"].lat + "&lon=" + weatherData["coord"].lon + "&exclude=hourly,daily&appid=" + apiKey;
+    // create a new span for each currentCityUVIIndex
     var currentCityUVIIndex = document.createElement("span");
     fetch(openWeatherUVIURL)
         .then(function (response) {
@@ -167,7 +167,6 @@ function displayCurrentUVIIndex(weatherData) {
 function displayFiveDayForecast(weatherData) {
     fiveDayForecast.textContent = '';
     var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherData["name"] + "&appid=" + apiKey + '&units=imperial';
-    console.log(fiveDayForecastURL);
 
     fetch(fiveDayForecastURL)
         .then(function (response) {
@@ -208,8 +207,7 @@ function displayFiveDayForecast(weatherData) {
         })
 }
 
-
-
 cityForm.addEventListener("submit", submitCityData);
+
 // run this function immediately to see loaded cities
 loadPreviousCityData();
