@@ -8,7 +8,6 @@ var fiveDayForecast = document.querySelector(".city-weather-5-day-forecast");
 var apiKey = '8aaaf47fd1335c41e91dc5418eca16e9';
 
 // function handles submissions when user enters city and hits submit
-
 function submitCityData(event) {
     event.preventDefault();
     if (cityName) {
@@ -50,7 +49,7 @@ function loadPreviousCityData() {
         // add the button to the previous city results div
         previousCityResults.append(previousCityName); 
         
-        // user clicks on button of  previous searches and see weather info displayed
+        // user clicks on previoiusCityName button of  previous searches and see weather info displayed
         previousCityName.addEventListener("click", function (event) {
             var element = event.target;
             var cityName = element.getAttribute("city-name");
@@ -60,8 +59,6 @@ function loadPreviousCityData() {
     }
 }
 
-
-
 // function retrives actual weather data based off city user inputted
 function getCityData(city) {
     var openWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + (city.value || city) + '&appid=' + apiKey + '&units=imperial';
@@ -70,7 +67,6 @@ function getCityData(city) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    console.log(data)
 
                     // display the current weather from retrived data
                     displayCurrentWeather(data);
@@ -179,9 +175,9 @@ function displayFiveDayForecast(weatherData) {
                     console.log("ICON", data["list"][0]["weather"][0].icon);
 
                     for (var i = 3; i < data["list"].length; i = i + 8) {
+                        // create DOM elements to hold five day forecast info
                         var foreCastCard = document.createElement("div");
                         foreCastCard.className = "city-weather-forecast-card";
-                        console.log(data["list"][i])
                         var foreCastCardDate = document.createElement("h2");
                         var foreCastCardIcon = document.createElement("div");
                         foreCastCardIcon.className = "city-weather-forecast-card-icon";
@@ -189,6 +185,8 @@ function displayFiveDayForecast(weatherData) {
                         var foreCastCardWind = document.createElement("span");
                         var foreCastCardHumidity = document.createElement("span");
 
+
+                        // add the data to the created DOM elements
                         foreCastCardDate.append(data["list"][i]["dt_txt"].split(' ')[0])
                         foreCastCardIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${data["list"][i]["weather"][0].icon}.png" alt="Weather Icon"/>`;
                         foreCastCardTemp.append("Temp: " + data["list"][i]["main"].temp + " F");
@@ -210,6 +208,7 @@ function displayFiveDayForecast(weatherData) {
         })
 }
 
+// when user clicks on submit after entering city, submit form data
 cityForm.addEventListener("submit", submitCityData);
 
 // run this function immediately to see loaded cities
