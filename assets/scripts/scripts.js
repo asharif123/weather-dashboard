@@ -19,6 +19,7 @@ function submitCityData(event) {
     }
     else {
         window.alert("City does not exist!");
+        return;
     }
 }
 
@@ -27,6 +28,7 @@ function submitCityData(event) {
 function storeCityData(city) {
     allCityData.push(city);
     localStorage.setItem("cityStorage", JSON.stringify(allCityData));
+
     // load previous city data
     loadPreviousCityData();
 
@@ -34,9 +36,9 @@ function storeCityData(city) {
 
 // load stored cities that user inputted
 var allCityData = JSON.parse(localStorage.getItem("cityStorage")) || [];
+
 function loadPreviousCityData() {
-    // ASK
-    document.querySelector(".city-weather-previous-search").innerHTML = '';
+    document.querySelector(".city-weather-previous-search").textContent = '';
 
     // create search button for each city in the array
     for (var i = 0; i < allCityData.length; i++) {
@@ -86,7 +88,6 @@ function getCityData(city) {
             }
         })
 
-
         .catch(function (error) {
             alert('Please enter a city name!');
         });
@@ -131,7 +132,9 @@ function displayCurrentWeather(weatherData) {
 
 // function to display UVI index
 function displayCurrentUVIIndex(weatherData) {
+    // API to grab the UVI Index
     var openWeatherUVIURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + weatherData["coord"].lat + "&lon=" + weatherData["coord"].lon + "&exclude=hourly,daily&appid=" + apiKey;
+    
     // create a new span for each currentCityUVIIndex
     var currentCityUVIIndex = document.createElement("span");
     fetch(openWeatherUVIURL)
