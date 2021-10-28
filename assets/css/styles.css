@@ -19,6 +19,7 @@ header {
 main {
     width: 100vw;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
 }
 
@@ -132,12 +133,13 @@ form button {
 
 .city-weather-previous-search-button {
     width: 200px;
+    min-width: 250px;
     border-radius: 5px;
     background-color: #5e6670;
     color: white;
     font-weight: 900;
     padding: 5%;
-    margin-bottom: 2%;
+    margin: 2% 0% 2% -11%;
 }
 
 .city-weather-5-day-forecast {
@@ -153,7 +155,7 @@ form button {
     border-radius: 5px;
     padding: 1%;
     min-height: 250px;
-    background-color: #31308a;
+    background-color: #6260ca;
     color: white;
 
 }

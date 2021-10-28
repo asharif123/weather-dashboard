@@ -163,9 +163,9 @@ function displayFiveDayForecast(weatherData) {
                 console.log("DATA", data);
                 // Pieces of information to add to div
                 // console.log("ICON", `<img src="https://openweathermap.org/img/w/${data["list"][0]["weather"][0]["icon"]}.png" alt="Weather Icon"/>`);
-                // console.log("ICON", data["list"][0]["weather"].icon);
+                console.log("ICON", data["list"][0]["weather"][0].icon);
 
-                for (var i = 7; i < 40; i = i + 8) {
+                for (var i = 0; i < data["list"].length; i = i + 8) {
                     var foreCastCard = document.createElement("div");
                     foreCastCard.className = "city-weather-forecast-card";                
                     console.log(data["list"][i])
@@ -177,7 +177,7 @@ function displayFiveDayForecast(weatherData) {
                     var foreCastCardHumidity = document.createElement("span");
 
                     foreCastCardDate.append(data["list"][i]["dt_txt"].split(' ')[0])
-                    foreCastCardIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${data["list"][i]["weather"].icon}.png" alt="Weather Icon"/>`;
+                    foreCastCardIcon.innerHTML = `<img src="https://openweathermap.org/img/wn/${data["list"][i]["weather"][0].icon}.png" alt="Weather Icon"/>`;
                     foreCastCardTemp.append("Temp: " + data["list"][i]["main"].temp + " F");
                     foreCastCardWind.append("Wind: " + data["list"][i]["wind"].speed + " mph");
                     foreCastCardHumidity.append("Humidity: " + data["list"][i]["main"].humidity + " %");
