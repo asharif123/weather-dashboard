@@ -12,9 +12,9 @@ var apiKey = '8aaaf47fd1335c41e91dc5418eca16e9';
 function submitCityData(event) {
     event.preventDefault();
     if (cityName) {
-        var cityValue = cityName.value.trim().replace(" ", '');
+        var cityValue = cityName.value.trim();
         getCityData(cityName);
-        storeCityData(cityValue)
+        storeCityData(cityValue);
         cityName.value = '';
     }
     else {
@@ -31,24 +31,45 @@ function storeCityData(city) {
 
     allCityData.push(cityStorage);
     localStorage.setItem("cityStorage", JSON.stringify(allCityData));
+    // load previous city data
+    loadPreviousCityData();
+
 }
 
 // load stored cities that user inputted
 var allCityData = JSON.parse(localStorage.getItem("cityStorage")) || [];
+
 function loadPreviousCityData() {
-    for (var i = 0; i < allCityData.length; i++) {
-        var previousCitySearch = document.createElement('button');
-        previousCitySearch.className = "city-weather-previous-search-button";
-        previousCitySearch.append(allCityData[i].cityInformation);
-        previousCityResults.appendChild(previousCitySearch);
+
+    if (cityName) {
+        var previousCityName = document.createElement('button');
+        previousCityName.className = 'city-weather-previous-search-button';
+        previousCityName.setAttribute("city-name", allCityData[allCityData.length - 1].cityInformation);
+        // previousCityName.id = allCityData[allCityData.length - 1].cityInformation;
+        previousCityName.append(allCityData[allCityData.length - 1].cityInformation);
+        previousCityResults.append(previousCityName);
+
+        // user clicks on button of  previous searches and see weather info displayed
+        document.querySelector(".city-weather-previous-search-button").addEventListener("click", function (event) {
+            var element = event.target;
+            var cityName = element.getAttribute("city-name");
+            getCityData(cityName);
+            cityName = '';
+
+            
+
+        })
     }
+    else {
+        window.alert("City does not exist!");
+    }
+
 }
 
-loadPreviousCityData();
 
 // function retrives actual weather data based off city user inputted
 function getCityData(city) {
-    var openWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city.value + '&appid=' + apiKey + '&units=imperial';
+    var openWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + ( city.value || city ) + '&appid=' + apiKey + '&units=imperial';
     console.log(openWeatherURL);
     fetch(openWeatherURL)
         .then(function(response){
@@ -154,15 +175,12 @@ function displayFiveDayForecast(weatherData) {
     fiveDayForecast.textContent = '';
     var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherData["name"] + "&appid=" + apiKey + '&units=imperial';
     console.log(fiveDayForecastURL);
-    // foreCastCard.textContent = '';
 
     fetch(fiveDayForecastURL)
     .then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
                 console.log("DATA", data);
-                // Pieces of information to add to div
-                // console.log("ICON", `<img src="https://openweathermap.org/img/w/${data["list"][0]["weather"][0]["icon"]}.png" alt="Weather Icon"/>`);
                 console.log("ICON", data["list"][0]["weather"][0].icon);
 
                 for (var i = 0; i < data["list"].length; i = i + 8) {
