@@ -38,7 +38,7 @@ function storeCityData(city) {
 
 // load stored cities that user inputted
 var allCityData = JSON.parse(localStorage.getItem("cityStorage")) || [];
-
+console.log("DATA RESULTS", allCityData);
 function loadPreviousCityData() {
 
     if (cityName) {

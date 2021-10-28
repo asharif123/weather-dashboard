@@ -143,18 +143,20 @@ form button {
 }
 
 .city-weather-5-day-forecast {
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
+    text-align: center;
 }
 
 .city-weather-forecast-card {
     width: 18%;
+    font-size: 75%;
+    text-align: center;
     margin: 2% 2% 0% 0%;
     border: 2px solid black;
     border-radius: 5px;
-    padding: 1%;
-    min-height: 250px;
+    padding: 2%;
+    min-height: 300px;
     background-color: #6260ca;
     color: white;
 
@@ -163,6 +165,23 @@ form button {
 .city-weather-forecast-card h2, .city-weather-forecast-card-icon, .city-weather-forecast-card span {
     margin-bottom: 24%;
 }
+
+/* *************************** responsiveness ****************** */
+
+@media (max-width: 1000px) {
+    .city-weather-forecast-card {
+        width: 80%;
+    }
+  }
+
+  @media (max-width: 860px) {
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+  }
 
 
 
