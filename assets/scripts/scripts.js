@@ -183,7 +183,7 @@ function displayFiveDayForecast(weatherData) {
                 console.log("DATA", data);
                 console.log("ICON", data["list"][0]["weather"][0].icon);
 
-                for (var i = 0; i < data["list"].length; i = i + 8) {
+                for (var i = 3; i < data["list"].length; i = i + 8) {
                     var foreCastCard = document.createElement("div");
                     foreCastCard.className = "city-weather-forecast-card";                
                     console.log(data["list"][i])

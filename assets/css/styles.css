@@ -107,14 +107,14 @@ form {
 
 form input {
     padding: 5%;
-    min-width: 250px;
+    min-width: 150px;
     border-radius: 5px;
 }
 
 form button {
     margin: 5% 0% 5% 0%;
     padding: 5%;
-    min-width: 250px;
+    min-width: 150px;
     border-radius: 5px;
     background-color: #0c51a0;
     color: white;
@@ -132,8 +132,7 @@ form button {
 }
 
 .city-weather-previous-search-button {
-    width: 200px;
-    min-width: 250px;
+    min-width: 150px;
     border-radius: 5px;
     background-color: #5e6670;
     color: white;
@@ -168,18 +167,31 @@ form button {
 
 /* *************************** responsiveness ****************** */
 
-@media (max-width: 1000px) {
+@media (max-width: 1030px) {
     .city-weather-forecast-card {
         width: 80%;
+        margin-right: 5%;
     }
   }
 
   @media (max-width: 860px) {
+
+    .city-weather-forecast-card {
+        width: 100%;
+        margin-right: 5%;
+    }
+
     main {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    #city-weather-search h2, h1{
+        font-size: 90%;
+        text-align: center;
+        margin: 0 auto;
     }
   }
 
