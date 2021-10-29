@@ -4,7 +4,7 @@
     padding: 0;
   }
 
-  :root {
+:root {
     --font-primary: 'Roboto', sans-serif;
 }
 
@@ -186,6 +186,10 @@ form button {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    #city-weather-search {
+        margin: 0 21% 0 10%;
     }
 
     #city-weather-search h2, h1{
