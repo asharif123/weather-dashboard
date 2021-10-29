@@ -28,7 +28,7 @@ function storeCityData(city) {
     allCityData.push(city);
     localStorage.setItem("cityStorage", JSON.stringify(allCityData));
 
-    // load previous city data
+    // load previous city data to update the data
     loadPreviousCityData();
 
 }
@@ -37,7 +37,8 @@ function storeCityData(city) {
 var allCityData = JSON.parse(localStorage.getItem("cityStorage")) || [];
 
 function loadPreviousCityData() {
-    previousCityResults.textContent = '';
+    // used to remove prev nodes so that we dont have repeating elements
+    previousCityResults.innerHTML = '';
 
     // create search button for each city in the array
     for (var i = 0; i < allCityData.length; i++) {
@@ -49,7 +50,7 @@ function loadPreviousCityData() {
         // add the button to the previous city results div
         previousCityResults.append(previousCityName); 
         
-        // user clicks on previoiusCityName button of  previous searches and see weather info displayed
+        // user clicks on previousCityName button of  previous searches and see weather info displayed
         previousCityName.addEventListener("click", function (event) {
             var element = event.target;
             var cityName = element.getAttribute("city-name");
@@ -92,7 +93,7 @@ function getCityData(city) {
 // function display weather information of city inputted by user
 
 function displayCurrentWeather(weatherData) {
-    citySearchResults.textContent = '';
+    citySearchResults.innerHTML = '';
     var currentCityInfo = document.createElement('div');
     currentCityInfo.className = "current-city-information";
     var currentCityName = document.createElement('h1');
@@ -164,7 +165,7 @@ function displayCurrentUVIIndex(weatherData) {
 
 // function to display 5-day forecast
 function displayFiveDayForecast(weatherData) {
-    fiveDayForecast.textContent = '';
+    fiveDayForecast.innerHTML = '';
     var fiveDayForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + weatherData["name"] + "&appid=" + apiKey + '&units=imperial';
 
     fetch(fiveDayForecastURL)
